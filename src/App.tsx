@@ -7,36 +7,50 @@ import Experience from './components/Experience';
 import Projects from './components/Projects';
 import Footer from './components/Footer';
 
-function App() {
-  const [isDarkMode, setIsDarkMode] = useState(true);
+const App: React.FC = () => {
+  const [isDarkMode, setIsDarkMode] = useState<boolean>(() => {
+    // 🧠 Load theme from localStorage or default to dark
+    const storedTheme = localStorage.getItem('theme');
+    return storedTheme ? storedTheme === 'dark' : true;
+  });
 
   useEffect(() => {
+    const root = document.documentElement;
     if (isDarkMode) {
-      document.documentElement.classList.add('dark');
+      root.classList.add('dark');
+      localStorage.setItem('theme', 'dark');
     } else {
-      document.documentElement.classList.remove('dark');
+      root.classList.remove('dark');
+      localStorage.setItem('theme', 'light');
     }
   }, [isDarkMode]);
 
-  const toggleTheme = () => {
-    setIsDarkMode(!isDarkMode);
-  };
-
-
+  const toggleTheme = () => setIsDarkMode((prev) => !prev);
 
   return (
-    <div className={`min-h-screen transition-colors duration-300 ${isDarkMode ? 'dark' : ''}`}>
+    <div
+      className={`min-h-screen transition-colors duration-500 ease-in-out ${
+        isDarkMode ? 'dark' : ''
+      }`}
+    >
+      {/* 🌙 Theme Toggle Button (with animation) */}
       <ThemeToggle isDarkMode={isDarkMode} toggleTheme={toggleTheme} />
-      <div className="bg-white dark:bg-gray-900 text-gray-900 dark:text-white transition-colors duration-300">
-        <Navigation />
+
+      {/* 🧭 Navigation */}
+      {/* <Navigation /> */}
+
+      {/* 🌟 Main Content */}
+      <main className="bg-white dark:bg-gray-900 text-gray-900 dark:text-white transition-colors duration-500 animate-fade-in">
         <Hero />
         <About />
         <Experience />
-        <Projects />
-        <Footer />
-      </div>
+        {/* <Projects /> */}
+      </main>
+
+      {/* 🦶 Footer */}
+      <Footer />
     </div>
   );
-}
+};
 
 export default App;

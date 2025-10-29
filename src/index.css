@@ -2,27 +2,127 @@
 @tailwind components;
 @tailwind utilities;
 
+/* -----------------------------
+   🌐 BASE STYLES
+----------------------------- */
 @layer base {
   html {
     scroll-behavior: smooth;
   }
-  
+
   body {
     font-family: 'Inter', system-ui, sans-serif;
+    @apply bg-white text-gray-900 dark:bg-gray-900 dark:text-gray-100 transition-colors duration-300;
+  }
+
+  /* Smooth transitions for all elements */
+  * {
+    @apply transition-all duration-300 ease-in-out;
+  }
+
+  /* Text selection highlight */
+  ::selection {
+    background-color: #3b82f6; /* blue-500 */
+    color: white;
   }
 }
 
+/* -----------------------------
+   🌀 CUSTOM ANIMATIONS
+----------------------------- */
 @layer utilities {
+  /* Floating animation */
   .animate-float {
     animation: float 3s ease-in-out infinite;
   }
+
+  /* Subtle fade-up entrance */
+  .animate-fade-up {
+    animation: fade-up 0.9s ease-out forwards;
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  /* Simple fade-in */
+  .animate-fade-in {
+    animation: fade-in 1.2s ease-in-out forwards;
+    opacity: 0;
+  }
+
+  /* Slow spin — for icons like Sun/Moon */
+  .animate-spin-slow {
+    animation: spin-slow 5s linear infinite;
+  }
+
+  /* Hover glow effect */
+  .hover-glow:hover {
+    box-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
+  }
+
+  /* Animated text gradient (for Hero title) */
+  .text-gradient {
+    background: linear-gradient(90deg, #3b82f6, #6366f1, #ec4899);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-size: 200%;
+    animation: gradient-move 5s ease infinite;
+  }
+
+  /* Hero section centering */
+  .center-section {
+    @apply flex flex-col items-center justify-center text-center min-h-screen px-4 sm:px-6 md:px-10;
+  }
+
+  /* Soft shadow (theme-aware) */
+  .soft-shadow {
+    @apply shadow-md dark:shadow-gray-800/50;
+  }
 }
 
+/* -----------------------------
+   🔁 KEYFRAMES
+----------------------------- */
 @keyframes float {
-  0%, 100% {
-    transform: translateY(0px);
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes fade-up {
+  0% {
+    opacity: 0;
+    transform: translateY(25px);
   }
-  50% {
-    transform: translateY(-10px);
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes gradient-move {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* -----------------------------
+   📱 RESPONSIVE UTILITIES
+----------------------------- */
+@layer utilities {
+  .mobile-padding {
+    @apply px-4 sm:px-6 md:px-10;
+  }
+
+  .section-spacing {
+    @apply py-16 md:py-24;
   }
 }

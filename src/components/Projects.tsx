@@ -5,75 +5,88 @@ const projects = [
   {
     title: "Vehicle Management System",
     description:
-      "Microservices-based internal management system for motorcycle company",
+      "Microservices-based internal management system for a motorcycle company — built modules for finance, sales, audit, and vendor management.",
     tech: "Node.js, Prisma, PostgreSQL, React",
-    category: "web",
+    link: "https://github.com/iftekhar0six",
+    category: "Web App",
   },
   {
     title: "Agricultural Products E-commerce",
-    description: "Complete e-commerce platform for agriculture products",
+    description:
+      "End-to-end e-commerce platform with admin panel and product management, optimized for inventory and performance.",
     tech: "Node.js, PostgreSQL, Prisma, React",
-    category: "web",
+    link: "https://github.com/iftekhar0six",
+    category: "E-commerce",
   },
   {
-    title: "Web Forum",
-    description: "University team project for discussion platform",
-    tech: "Web Technologies",
-    category: "web",
-  },
-  {
-    title: "News Web Application",
-    description: "Dynamic news website using React and APIs",
-    tech: "React, APIs",
-    category: "web",
-  },
-  {
-    title: "KITE",
-    description: "Backend for Web Forum",
-    tech: "Node.js, Express, Mailing, APIs",
-    category: "web",
+    title: "Web Forum (KITE)",
+    description:
+      "University project enabling discussions and community interaction, featuring user auth, replies, and moderation tools.",
+    tech: "Node.js, Express, MongoDB, React",
+    link: "https://github.com/iftekhar0six",
+    category: "Full Stack",
   },
   {
     title: "ChatHub",
-    description: "Realtime Chat Web Application",
-    tech: "Node.js, Express, Socket, HTML, APIs",
-    category: "web",
+    description:
+      "Realtime chat web application with private messaging and online presence indicators using Socket.io.",
+    tech: "Node.js, Express, Socket.io, React",
+    link: "https://github.com/iftekhar0six",
+    category: "Web App",
   },
   {
-    title: "Calculator",
-    description: "Android Calculator App",
-    tech: "XML, Java",
-    category: "app",
+    title: "News Web Application",
+    description:
+      "Dynamic news app fetching and rendering articles using public APIs and React hooks.",
+    tech: "React, APIs",
+    link: "https://github.com/iftekhar0six",
+    category: "Frontend",
+  },
+  {
+    title: "Calculator App",
+    description: "Android calculator app with clean UI and precise operations.",
+    tech: "Java, XML",
+    link: "https://github.com/iftekhar0six",
+    category: "Mobile App",
   },
 ];
 
-const Projects: React.FC = () => {
+const Projects = () => {
   return (
-    <section id="projects" className="py-20 px-6 bg-gray-50 dark:bg-gray-900">
+    <section
+      id="projects"
+      className="py-20 px-6 bg-gray-50 dark:bg-gray-900 transition-colors duration-300"
+    >
       <div className="max-w-6xl mx-auto">
-        {/* Section Heading */}
+        {/* Heading */}
         <div className="text-center mb-16">
-          <h2 className="text-3xl font-bold text-gray-900 dark:text-white">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white">
             Featured Projects
           </h2>
           <p className="text-gray-600 dark:text-gray-400 mt-2">
-            Recent Work & Implementations
+            A showcase of my recent work and implementations.
           </p>
         </div>
 
-        {/* Project Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        {/* Projects Grid */}
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {projects.map((project, index) => (
             <div
               key={index}
-              className="group border border-gray-200 dark:border-gray-700 rounded-2xl p-6 bg-white dark:bg-gray-800 hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
+              className="group relative bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl p-6 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
             >
-              {/* Title + Link */}
-              <div className="flex items-center justify-between mb-3">
-                <h3 className="text-xl font-semibold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-                  {project.title}
-                </h3>
-                {/* {project.link && (
+              {/* Project Header */}
+              <div className="flex items-start justify-between mb-3">
+                <div>
+                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                    {project.title}
+                  </h3>
+                  <p className="text-sm text-blue-600 dark:text-blue-400 font-medium">
+                    {project.category}
+                  </p>
+                </div>
+
+                {project.link && (
                   <a
                     href={project.link}
                     target="_blank"
@@ -82,25 +95,28 @@ const Projects: React.FC = () => {
                   >
                     <ExternalLink className="w-5 h-5" />
                   </a>
-                )} */}
+                )}
               </div>
 
               {/* Description */}
-              <p className="text-gray-600 dark:text-gray-400 mb-4 leading-relaxed">
+              <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed mb-4">
                 {project.description}
               </p>
 
               {/* Tech Stack */}
               <div className="flex flex-wrap gap-2">
-                {project.tech.split(", ").map((tech, techIndex) => (
+                {project.tech.split(", ").map((tech, i) => (
                   <span
-                    key={techIndex}
-                    className="px-3 py-1 text-xs rounded-full bg-blue-50 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300"
+                    key={i}
+                    className="px-3 py-1 text-xs font-medium rounded-full bg-blue-50 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300"
                   >
                     {tech}
                   </span>
                 ))}
               </div>
+
+              {/* Subtle Hover Accent */}
+              <div className="absolute inset-0 rounded-2xl border border-transparent group-hover:border-blue-400/50 transition-all duration-300"></div>
             </div>
           ))}
         </div>
