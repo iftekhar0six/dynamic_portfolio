@@ -2,127 +2,218 @@
 @tailwind components;
 @tailwind utilities;
 
-/* -----------------------------
-   🌐 BASE STYLES
------------------------------ */
+/* ---------------------------------
+   DESIGN SYSTEM — BASE STYLES
+---------------------------------- */
+
 @layer base {
+  :root {
+    color-scheme: light;
+    --color-background: 250 250 249;
+    --color-surface: 255 255 255;
+    --color-text: 28 37 32;
+    --color-muted: 100 116 108;
+    --color-accent: 8 127 91;
+    --color-border: 226 232 228;
+  }
+
+  .dark {
+    color-scheme: dark;
+    --color-background: 11 15 14;
+    --color-surface: 25 35 30;
+    --color-text: 232 240 235;
+    --color-muted: 156 173 163;
+    --color-accent: 67 217 163;
+    --color-border: 48 64 55;
+  }
+
   html {
     scroll-behavior: smooth;
+    scroll-padding-top: 6rem;
+    background-color: rgb(var(--color-background));
   }
 
   body {
+    @apply min-h-screen antialiased;
     font-family: 'Inter', system-ui, sans-serif;
-    @apply bg-white text-gray-900 dark:bg-gray-900 dark:text-gray-100 transition-colors duration-300;
+    background-color: rgb(var(--color-background));
+    color: rgb(var(--color-text));
+    transition:
+      background-color 300ms ease,
+      color 300ms ease;
   }
 
-  /* Smooth transitions for all elements */
   * {
-    @apply transition-all duration-300 ease-in-out;
+    box-sizing: border-box;
   }
 
-  /* Text selection highlight */
   ::selection {
-    background-color: #3b82f6; /* blue-500 */
-    color: white;
+    background-color: rgb(var(--color-accent) / 25%);
+    color: rgb(var(--color-text));
+  }
+
+  a,
+  button,
+  input,
+  textarea,
+  select {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  button,
+  a {
+    touch-action: manipulation;
+  }
+
+  :focus-visible {
+    outline: 2px solid rgb(var(--color-accent));
+    outline-offset: 4px;
+  }
+
+  img,
+  svg {
+    flex-shrink: 0;
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  section[id] {
+    scroll-margin-top: 6rem;
   }
 }
 
-/* -----------------------------
-   🌀 CUSTOM ANIMATIONS
------------------------------ */
+/* ---------------------------------
+   REUSABLE VISUAL UTILITIES
+---------------------------------- */
+
 @layer utilities {
-  /* Floating animation */
-  .animate-float {
-    animation: float 3s ease-in-out infinite;
+  .page-grid {
+    background-image:
+      linear-gradient(
+        to right,
+        rgb(var(--color-text) / 3%) 1px,
+        transparent 1px
+      ),
+      linear-gradient(
+        to bottom,
+        rgb(var(--color-text) / 3%) 1px,
+        transparent 1px
+      );
+    background-size: 40px 40px;
   }
 
-  /* Subtle fade-up entrance */
-  .animate-fade-up {
-    animation: fade-up 0.9s ease-out forwards;
-    opacity: 0;
-    transform: translateY(20px);
+  .glass-panel {
+    background-color: rgb(var(--color-surface) / 80%);
+    border: 1px solid rgb(var(--color-border) / 80%);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
   }
 
-  /* Simple fade-in */
-  .animate-fade-in {
-    animation: fade-in 1.2s ease-in-out forwards;
-    opacity: 0;
-  }
-
-  /* Slow spin — for icons like Sun/Moon */
-  .animate-spin-slow {
-    animation: spin-slow 5s linear infinite;
-  }
-
-  /* Hover glow effect */
-  .hover-glow:hover {
-    box-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
-  }
-
-  /* Animated text gradient (for Hero title) */
-  .text-gradient {
-    background: linear-gradient(90deg, #3b82f6, #6366f1, #ec4899);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-size: 200%;
-    animation: gradient-move 5s ease infinite;
-  }
-
-  /* Hero section centering */
-  .center-section {
-    @apply flex flex-col items-center justify-center text-center min-h-screen px-4 sm:px-6 md:px-10;
-  }
-
-  /* Soft shadow (theme-aware) */
   .soft-shadow {
-    @apply shadow-md dark:shadow-gray-800/50;
+    box-shadow: 0 12px 40px rgb(0 0 0 / 6%);
   }
-}
 
-/* -----------------------------
-   🔁 KEYFRAMES
------------------------------ */
-@keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-8px); }
-}
-
-@keyframes fade-up {
-  0% {
-    opacity: 0;
-    transform: translateY(25px);
+  .dark .soft-shadow {
+    box-shadow: 0 12px 40px rgb(0 0 0 / 20%);
   }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
+
+  .text-gradient {
+    background-image: linear-gradient(
+      100deg,
+      rgb(var(--color-accent)),
+      #8cebc4
+    );
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
   }
-}
 
-@keyframes fade-in {
-  0% { opacity: 0; }
-  100% { opacity: 1; }
-}
-
-@keyframes spin-slow {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
-@keyframes gradient-move {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-/* -----------------------------
-   📱 RESPONSIVE UTILITIES
------------------------------ */
-@layer utilities {
   .mobile-padding {
     @apply px-4 sm:px-6 md:px-10;
   }
 
   .section-spacing {
     @apply py-16 md:py-24;
+  }
+
+  .animate-float {
+    animation: float 3s ease-in-out infinite;
+  }
+
+  .animate-fade-up {
+    animation: fade-up 0.8s ease-out both;
+  }
+
+  .animate-spin-slow {
+    animation: spin-slow 5s linear infinite;
+  }
+
+  .hover-glow {
+    transition: box-shadow 250ms ease;
+  }
+
+  .hover-glow:hover {
+    box-shadow: 0 0 24px rgb(var(--color-accent) / 18%);
+  }
+
+  .center-section {
+    @apply flex min-h-screen flex-col items-center justify-center
+      px-4 text-center sm:px-6 md:px-10;
+  }
+}
+
+/* ---------------------------------
+   CUSTOM KEYFRAMES
+---------------------------------- */
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ---------------------------------
+   ACCESSIBILITY — REDUCED MOTION
+---------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }

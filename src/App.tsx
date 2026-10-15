@@ -1,4 +1,6 @@
+
 import React, { useState, useEffect } from 'react';
+
 import ThemeToggle from './components/ThemeToggle';
 import Navigation from './components/Navigation';
 import Hero from './components/Hero';
@@ -9,45 +11,70 @@ import Footer from './components/Footer';
 
 const App: React.FC = () => {
   const [isDarkMode, setIsDarkMode] = useState<boolean>(() => {
-    // 🧠 Load theme from localStorage or default to dark
-    const storedTheme = localStorage.getItem('theme');
-    return storedTheme ? storedTheme === 'dark' : true;
+    try {
+      const storedTheme = localStorage.getItem('theme');
+      return storedTheme ? storedTheme === 'dark' : true;
+    } catch {
+      return true;
+    }
   });
 
   useEffect(() => {
     const root = document.documentElement;
-    if (isDarkMode) {
-      root.classList.add('dark');
-      localStorage.setItem('theme', 'dark');
-    } else {
-      root.classList.remove('dark');
-      localStorage.setItem('theme', 'light');
+
+    root.classList.toggle('dark', isDarkMode);
+
+    try {
+      localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
+    } catch {
+      // The theme still works if storage is unavailable.
     }
   }, [isDarkMode]);
 
-  const toggleTheme = () => setIsDarkMode((prev) => !prev);
+  const toggleTheme = () => {
+    setIsDarkMode((prev) => !prev);
+  };
 
   return (
     <div
-      className={`min-h-screen transition-colors duration-500 ease-in-out ${
-        isDarkMode ? 'dark' : ''
-      }`}
+      className="
+        min-h-screen
+        overflow-x-clip
+        bg-stone-50
+        text-stone-900
+        transition-colors
+        duration-500
+        ease-in-out
+        dark:bg-[#0B0F0E]
+        dark:text-[#E8F0EB]
+        motion-reduce:transition-none
+      "
     >
-      {/* 🌙 Theme Toggle Button (with animation) */}
-      <ThemeToggle isDarkMode={isDarkMode} toggleTheme={toggleTheme} />
+      <ThemeToggle
+        isDarkMode={isDarkMode}
+        toggleTheme={toggleTheme}
+      />
 
-      {/* 🧭 Navigation */}
+      {/* Navigation — currently disabled in your original code */}
       {/* <Navigation /> */}
 
-      {/* 🌟 Main Content */}
-      <main className="bg-white dark:bg-gray-900 text-gray-900 dark:text-white transition-colors duration-500 animate-fade-in">
+      <main
+        id="main-content"
+        className="
+          min-h-screen
+          bg-transparent
+          text-inherit
+          motion-safe:animate-fade-in
+        "
+      >
         <Hero />
         <About />
         <Experience />
+
+        {/* Projects — currently disabled in your original code */}
         {/* <Projects /> */}
       </main>
 
-      {/* 🦶 Footer */}
       <Footer />
     </div>
   );
